@@ -29,21 +29,21 @@
     
     [self.view addSubview:self.petImageView];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.petImageView
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:1.0
-                                                           constant:0.0]];
+    [NSLayoutConstraint constraintWithItem:self.petImageView
+                                  attribute:NSLayoutAttributeCenterX
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeCenterX
+                                 multiplier:1.0
+                                   constant:0.0].active = YES;
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.petImageView
-                                                          attribute:NSLayoutAttributeCenterY
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeCenterY
-                                                         multiplier:1.0
-                                                           constant:0.0]];
+    [NSLayoutConstraint constraintWithItem:self.petImageView
+                                  attribute:NSLayoutAttributeCenterY
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeCenterY
+                                 multiplier:1.0
+                                   constant:0.0].active = YES;
     
 }
 
