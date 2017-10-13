@@ -14,6 +14,9 @@
 @property (nonatomic) UIImageView *petImageView;
 @property (nonatomic, strong) ONEPet *myPet;
 @property (nonatomic) UIImageView *bucketImageView;
+@property (nonatomic) UIImageView *appleImageView;
+@property (nonatomic) UIImageView *appleCopyImageView;
+
 
 @end
 
@@ -94,9 +97,50 @@
                                 multiplier:1
                                   constant:100]. active = YES;
     
-    
     [self.bucketImageView setUserInteractionEnabled:YES];
     
+    //Apple view
+   
+    self.appleImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    self.appleImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    self.appleImageView.image = [UIImage imageNamed:@"apple"];
+    [self.view addSubview:self.appleImageView];
+    
+    [NSLayoutConstraint constraintWithItem:self.appleImageView
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1.0
+                                  constant:50.0].active = YES;
+    
+    [NSLayoutConstraint constraintWithItem:self.appleImageView
+                                 attribute:NSLayoutAttributeBottomMargin
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1.0
+                                  constant:-70.0].active = YES;
+    
+    [NSLayoutConstraint constraintWithItem: self.appleImageView
+                                 attribute:NSLayoutAttributeWidth
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeWidth
+                                multiplier:1
+                                  constant:50]. active = YES;
+    
+    [NSLayoutConstraint constraintWithItem: self.appleImageView
+                                 attribute:NSLayoutAttributeHeight
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeHeight
+                                multiplier:1
+                                  constant:50]. active = YES;
+    
+    [self.appleImageView setUserInteractionEnabled:YES];
+
     
     
     // Pet the cat
