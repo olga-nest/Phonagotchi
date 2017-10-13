@@ -138,8 +138,12 @@
                                   constant:70]. active = YES;
     
     [self.appleImageView setUserInteractionEnabled:YES];
-
     
+    
+    //Init copy of the apple with the apple's frame
+    self.appleCopyImageView = [[UIImageView alloc]initWithFrame:self.appleImageView.frame];
+    self.appleCopyImageView.image = [UIImage imageNamed:@"apple"];
+    [self.appleCopyImageView setUserInteractionEnabled:YES];
     
     // Pet the cat
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(petTheCat:)];
@@ -160,6 +164,8 @@
 
 -(void)feedTheCat: (UIPinchGestureRecognizer *) sender {
     NSLog(@"Feed the F. cat!");
+    
+    
 }
 
 @end
