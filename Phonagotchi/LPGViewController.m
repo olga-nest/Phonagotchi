@@ -97,8 +97,6 @@
                                 multiplier:1
                                   constant:100]. active = YES;
     
-    [self.bucketImageView setUserInteractionEnabled:YES];
-    
     //Apple view
    
     self.appleImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
@@ -129,7 +127,7 @@
                                     toItem:nil
                                  attribute:NSLayoutAttributeWidth
                                 multiplier:1
-                                  constant:50]. active = YES;
+                                  constant:70]. active = YES;
     
     [NSLayoutConstraint constraintWithItem: self.appleImageView
                                  attribute:NSLayoutAttributeHeight
@@ -137,7 +135,7 @@
                                     toItem:nil
                                  attribute:NSLayoutAttributeHeight
                                 multiplier:1
-                                  constant:50]. active = YES;
+                                  constant:70]. active = YES;
     
     [self.appleImageView setUserInteractionEnabled:YES];
 
@@ -147,6 +145,10 @@
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(petTheCat:)];
     [self.petImageView addGestureRecognizer:panRecognizer];
     
+    // Feed the cat
+    
+    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(feedTheCat:)];
+    [self.appleImageView addGestureRecognizer:pinchRecognizer];
 }
 
 -(void)petTheCat: (UIPanGestureRecognizer *) sender {
@@ -154,6 +156,10 @@
     if (petVelocity.x < 5000 || petVelocity.y < 5000) {
     self.petImageView.image=[UIImage imageNamed:@"grumpy.png"];
     }
+}
+
+-(void)feedTheCat: (UIPinchGestureRecognizer *) sender {
+    NSLog(@"Feed the F. cat!");
 }
 
 @end
