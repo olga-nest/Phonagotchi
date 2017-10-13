@@ -163,7 +163,27 @@
 }
 
 -(void)feedTheCat: (UIPinchGestureRecognizer *) sender {
-    NSLog(@"Feed the F. cat!");
+    
+    switch (sender.state) {
+        case UIGestureRecognizerStateBegan:
+            NSLog(@"Creating copy of the apple");
+            [self.view addSubview:self.appleImageView];
+            
+            
+            break;
+        case UIGestureRecognizerStateChanged:
+            NSLog(@"Changed");
+
+        
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            NSLog(@"Ended");
+
+            break;
+        default:
+            break;
+    }
     
     
 }
