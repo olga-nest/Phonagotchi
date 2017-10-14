@@ -102,10 +102,10 @@
    
     self.appleImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
     self.appleImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    
+
     self.appleImageView.image = [UIImage imageNamed:@"apple"];
     [self.view addSubview:self.appleImageView];
-    
+
     [NSLayoutConstraint constraintWithItem:self.appleImageView
                                  attribute:NSLayoutAttributeLeading
                                  relatedBy:NSLayoutRelationEqual
@@ -113,7 +113,7 @@
                                  attribute:NSLayoutAttributeLeading
                                 multiplier:1.0
                                   constant:50.0].active = YES;
-    
+
     [NSLayoutConstraint constraintWithItem:self.appleImageView
                                  attribute:NSLayoutAttributeBottomMargin
                                  relatedBy:NSLayoutRelationEqual
@@ -121,66 +121,67 @@
                                  attribute:NSLayoutAttributeBottomMargin
                                 multiplier:1.0
                                   constant:-70.0].active = YES;
-    
+
     [NSLayoutConstraint constraintWithItem: self.appleImageView
                                  attribute:NSLayoutAttributeWidth
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:nil
-                                 attribute:NSLayoutAttributeWidth
+                                 attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:1
                                   constant:70]. active = YES;
-    
+
     [NSLayoutConstraint constraintWithItem: self.appleImageView
                                  attribute:NSLayoutAttributeHeight
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:nil
-                                 attribute:NSLayoutAttributeHeight
+                                 attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:1
                                   constant:70]. active = YES;
-  
-    [self.view addSubview:self.appleImageView];
+
+    //[self.view addSubview:self.appleImageView];
     [self.appleImageView setUserInteractionEnabled:YES];
-    
-    
+
+
     //Init copy of the apple
     
     self.appleCopyImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
-    self.appleImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.appleCopyImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.appleCopyImageView.image = [UIImage imageNamed:@"apple"];
+    [self.view addSubview:self.appleCopyImageView];
     
-//    [NSLayoutConstraint constraintWithItem:self.appleCopyImageView
-//                                 attribute:NSLayoutAttributeLeading
-//                                 relatedBy:NSLayoutRelationEqual
-//                                    toItem:self.view
-//                                 attribute:NSLayoutAttributeLeading
-//                                multiplier:1.0
-//                                  constant:51.0].active = YES;
-//
-//    [NSLayoutConstraint constraintWithItem:self.appleCopyImageView
-//                                 attribute:NSLayoutAttributeBottomMargin
-//                                 relatedBy:NSLayoutRelationEqual
-//                                    toItem:self.view
-//                                 attribute:NSLayoutAttributeBottomMargin
-//                                multiplier:1.0
-//                                  constant:-71.0].active = YES;
-//
-//    [NSLayoutConstraint constraintWithItem: self.appleCopyImageView
-//                                 attribute:NSLayoutAttributeWidth
-//                                 relatedBy:NSLayoutRelationEqual
-//                                    toItem:nil
-//                                 attribute:NSLayoutAttributeWidth
-//                                multiplier:1
-//                                  constant:70]. active = YES;
-//
-//    [NSLayoutConstraint constraintWithItem: self.appleCopyImageView
-//                                 attribute:NSLayoutAttributeHeight
-//                                 relatedBy:NSLayoutRelationEqual
-//                                    toItem:nil
-//                                 attribute:NSLayoutAttributeHeight
-//                                multiplier:1
-//                                  constant:70]. active = YES;
-//
-//
+    [NSLayoutConstraint constraintWithItem:self.appleCopyImageView
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1.0
+                                  constant:51.0].active = YES;
+
+    [NSLayoutConstraint constraintWithItem:self.appleCopyImageView
+                                 attribute:NSLayoutAttributeBottomMargin
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1.0
+                                  constant:-71.0].active = YES;
+
+    [NSLayoutConstraint constraintWithItem: self.appleCopyImageView
+                                 attribute:NSLayoutAttributeWidth
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1
+                                  constant:70].active = YES;
+
+    [NSLayoutConstraint constraintWithItem: self.appleCopyImageView
+                                 attribute:NSLayoutAttributeHeight
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1
+                                  constant:70].active = YES;
+
+    [self.appleCopyImageView setHidden:YES];
     [self.appleCopyImageView setUserInteractionEnabled:YES];
     
     // Pet the cat
@@ -208,9 +209,6 @@
     switch (sender.state) {
         case UIGestureRecognizerStateBegan:
             NSLog(@"Creating copy of the apple");
-            [self.view addSubview:self.appleCopyImageView];
-            [self.appleCopyImageView setUserInteractionEnabled:YES];
-            //Do I really need this?
             [self.appleCopyImageView setHidden:NO];
             
             break;
@@ -223,23 +221,24 @@
         case UIGestureRecognizerStateEnded:
             NSLog(@"UIGestureRecognizerStateEnded");
             
-            if (CGRectIntersectsRect(self.appleCopyImageView.frame, self.petImageView.frame)) {
+            if (CGRectIntersectsRect(self.appleImageView.frame, self.petImageView.frame)) {
                 [UIImageView animateWithDuration:2 animations:^{
-                    self.appleCopyImageView.alpha = 0;
+                    self.appleImageView.alpha = 0;
                 } completion:^(BOOL finished) {
-                    [self.appleCopyImageView setHidden:YES];
-                    self.appleCopyImageView.center = self.appleImageView.center;
-                    [self.appleCopyImageView setUserInteractionEnabled:NO];
-                    self.appleCopyImageView.alpha = 100;
+                    [self.appleImageView setHidden:YES];
+                    self.appleImageView.center = self.appleImageView.center;
+                    [self.appleImageView setUserInteractionEnabled:NO];
+                    self.appleImageView.alpha = 100;
+                    self.petImageView.image=[UIImage imageNamed:@"default.png"];
                 }];
             } else {
-                CGPoint point = CGPointMake(self.appleCopyImageView.frame.origin.x, 1000);
+                CGPoint point = CGPointMake(self.appleImageView.frame.origin.x, 1000);
                 [UIImageView animateWithDuration:2 animations:^{
-                    self.appleCopyImageView.center = point;
+                    self.appleImageView.center = point;
                 } completion:^(BOOL finished) {
-                    [self.appleCopyImageView setHidden:YES];
-                    self.appleCopyImageView.center = self.appleImageView.center;
-                    [self.appleCopyImageView setUserInteractionEnabled:NO];
+                    [self.appleImageView setHidden:YES];
+                    self.appleImageView.center = self.appleImageView.center;
+                    [self.appleImageView setUserInteractionEnabled:NO];
                 }];
             }
             break;
