@@ -16,6 +16,7 @@
 @property (nonatomic) UIImageView *bucketImageView;
 @property (nonatomic) UIImageView *appleImageView;
 @property (nonatomic) UIImageView *appleCopyImageView;
+@property (nonatomic) CGPoint locationInView;
 
 
 @end
@@ -136,13 +137,50 @@
                                  attribute:NSLayoutAttributeHeight
                                 multiplier:1
                                   constant:70]. active = YES;
-    
+  
+    [self.view addSubview:self.appleImageView];
     [self.appleImageView setUserInteractionEnabled:YES];
     
     
-    //Init copy of the apple with the apple's frame
-    self.appleCopyImageView = [[UIImageView alloc]initWithFrame:self.appleImageView.frame];
+    //Init copy of the apple
+    
+    self.appleCopyImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    self.appleImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.appleCopyImageView.image = [UIImage imageNamed:@"apple"];
+    
+//    [NSLayoutConstraint constraintWithItem:self.appleCopyImageView
+//                                 attribute:NSLayoutAttributeLeading
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:self.view
+//                                 attribute:NSLayoutAttributeLeading
+//                                multiplier:1.0
+//                                  constant:51.0].active = YES;
+//
+//    [NSLayoutConstraint constraintWithItem:self.appleCopyImageView
+//                                 attribute:NSLayoutAttributeBottomMargin
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:self.view
+//                                 attribute:NSLayoutAttributeBottomMargin
+//                                multiplier:1.0
+//                                  constant:-71.0].active = YES;
+//
+//    [NSLayoutConstraint constraintWithItem: self.appleCopyImageView
+//                                 attribute:NSLayoutAttributeWidth
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:nil
+//                                 attribute:NSLayoutAttributeWidth
+//                                multiplier:1
+//                                  constant:70]. active = YES;
+//
+//    [NSLayoutConstraint constraintWithItem: self.appleCopyImageView
+//                                 attribute:NSLayoutAttributeHeight
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:nil
+//                                 attribute:NSLayoutAttributeHeight
+//                                multiplier:1
+//                                  constant:70]. active = YES;
+//
+//
     [self.appleCopyImageView setUserInteractionEnabled:YES];
     
     // Pet the cat
@@ -164,24 +202,49 @@
 
 -(void)feedTheCat: (UIPinchGestureRecognizer *) sender {
     
+    CGPoint locationInView = [sender locationInView:self.view];
+    sender.view.center = locationInView;
+    
     switch (sender.state) {
         case UIGestureRecognizerStateBegan:
             NSLog(@"Creating copy of the apple");
-            [self.view addSubview:self.appleImageView];
-            
+            [self.view addSubview:self.appleCopyImageView];
+            [self.appleCopyImageView setUserInteractionEnabled:YES];
+            //Do I really need this?
+            [self.appleCopyImageView setHidden:NO];
             
             break;
         case UIGestureRecognizerStateChanged:
-            NSLog(@"Changed");
-
-        
+            NSLog(@"UIGestureRecognizerStateChanged");
+            
+            
             break;
             
         case UIGestureRecognizerStateEnded:
-            NSLog(@"Ended");
-
+            NSLog(@"UIGestureRecognizerStateEnded");
+            
+            if (CGRectIntersectsRect(self.appleCopyImageView.frame, self.petImageView.frame)) {
+                [UIImageView animateWithDuration:2 animations:^{
+                    self.appleCopyImageView.alpha = 0;
+                } completion:^(BOOL finished) {
+                    [self.appleCopyImageView setHidden:YES];
+                    self.appleCopyImageView.center = self.appleImageView.center;
+                    [self.appleCopyImageView setUserInteractionEnabled:NO];
+                    self.appleCopyImageView.alpha = 100;
+                }];
+            } else {
+                CGPoint point = CGPointMake(self.appleCopyImageView.frame.origin.x, 1000);
+                [UIImageView animateWithDuration:2 animations:^{
+                    self.appleCopyImageView.center = point;
+                } completion:^(BOOL finished) {
+                    [self.appleCopyImageView setHidden:YES];
+                    self.appleCopyImageView.center = self.appleImageView.center;
+                    [self.appleCopyImageView setUserInteractionEnabled:NO];
+                }];
+            }
             break;
-        default:
+        
+            default:
             break;
     }
     
